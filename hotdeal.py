@@ -57,22 +57,22 @@ def hotdeal(page_num): #핫딜 함수
     list_maker(badge, 'badge', badges) #뱃지를 리스트에 담는다
     list_maker(price, 'deal-price', prices) #가격을 리스트에 담는다
     list_maker(delivery_price, 'deal-delivery', delivery_prices) #배송비를 리스트에 담는다
-    
+        
     for deleted in deleted_list: #구조상 한 번 더 검색해야함
-        another_class_element = deleted.find("a", {'class': 'title'})
-        if another_class_element:
-            deleted_lists.append(another_class_element.text.strip())
+        deleted_add = deleted.find("a", {'class': 'title'})
+        if deleted_add:
+            deleted_lists.append(deleted_add.text.strip())
     
-    for titles in title: 
-        if titles.text.strip() == '핫딜 채널':
+    for title_add in title: #title class의 구조상 핫딜 채널 이라는게 자동적으로 나옴, 그걸 제외하고 리스트에 담는다
+        if title_add.text.strip() == '핫딜 채널':
             pass
-        elif titles.text.strip() != '':
-            titles.append(title.text.strip())
-        elif title.text.strip() == '':
+        elif title_add.text.strip() != '':
+            titles.append(title_add.text.strip())
+        elif title_add.text.strip() == '':
             titles.append('제목 없음')
 
-    for links in link:
-        links.append(link.get('href'))
+    for link_add in link:
+        links.append(link_add.get('href'))
     driver.quit() #드라이버를 종료한다
 
     
