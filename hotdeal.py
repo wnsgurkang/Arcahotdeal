@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
+import  discord
+import asyncio
 
 def set_chrome_driver():
     chrome_options = webdriver.ChromeOptions()
@@ -75,7 +77,24 @@ def hotdeal(page_num): #핫딜 함수
         links.append(link_add.get('href'))
     driver.quit() #드라이버를 종료한다
 
-    
+def discord_bot() : #디스코드 봇 함수   
+    client = discord.Client()
+    async def on_ready():
+        print(client.user.id)
+        print("ready")
+        game = discord.Game("핫딜")
+        await client.change_presence(status=discord.Status.online, activity=game)
+
+    async def on_message(message):
+        if message.content.startswith("!핫딜"):
+            for a in range(0, len(shops)):
+                if shops[a] in deleted_lists:
+                    pass
+                else:
+                    await message.channel.send(shops[a], titles[a], badges[a], prices[a], delivery_prices[a],'arca.live',links[a])
+    client.run("token")
+
+
 if __name__ == "__main__":
     for page_num in range(1, 3):
         hotdeal(page_num) 
