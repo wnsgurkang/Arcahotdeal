@@ -93,14 +93,15 @@ def discord_bot(input_token) : #디스코드 봇 함수
                 else:
                     await message.channel.send(shops[a], titles[a], badges[a], prices[a], delivery_prices[a],'arca.live',links[a])
     
-    async def embed_task():
-        await client.wait_until_ready()
-        channel = client.get_channel(819719798345695235)
+    async def embed_task(message):
+        if message.content.startswith("!embedtest"):   
+            await client.wait_until_ready()
+            channel = client.get_channel(819719798345695235)
 
-        while not client.is_closed():
-            embed = discord.Embed(title="Example Embed", description="This is an example embed.")
-            await channel.send(embed=embed)
-            await asyncio.sleep(60)
+            while not client.is_closed():
+                embed = discord.Embed(title="Example Embed", description="This is an example embed.")
+                await channel.send(embed=embed)
+                await asyncio.sleep(60)
 
     client.run(input_token)
 
