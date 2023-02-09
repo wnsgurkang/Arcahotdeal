@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
-import discord 
 
 def set_chrome_driver():
     chrome_options = webdriver.ChromeOptions()
@@ -26,6 +25,7 @@ prices = [] #가격을 담을 리스트
 titles = [] #제목을 담을 리스트
 shops = [] #쇼핑몰 이름을 담을 리스트
 links = [] #링크를 담을 리스트
+deleted_lists = [] #삭제된 핫딜의 제목을 담을 리스트
 
 def list_maker(fromsoup, check, list_name):
     for check in fromsoup:
@@ -51,11 +51,17 @@ def hotdeal(page_num): #핫딜 함수
     price = soup.findAll("span", {'class': 'deal-price'}) #핫딜채널에서 가격을 가져온다
     delivery_price = soup.findAll("span", {'class': 'deal-delivery'}) #핫딜채널에서 배송비를 가져온다
     link = soup.findAll("a", {'class': 'title'}) #핫딜채널에서 링크를 가져온다
-    
+    deleted_list = soup.findAll("div", {'class': 'vrow-top deal deal-close'})
+
     list_maker(shop, 'deal-store', shops) #쇼핑몰 이름을 리스트에 담는다
     list_maker(badge, 'badge', badges) #뱃지를 리스트에 담는다
     list_maker(price, 'deal-price', prices) #가격을 리스트에 담는다
     list_maker(delivery_price, 'deal-delivery', delivery_prices) #배송비를 리스트에 담는다
+    
+    for deleted in deleted_list:
+        another_class_element = deleted.find("a", {'class': 'title'})
+        if another_class_element:
+            deleted_lists.append(another_class_element.text.strip())
     
     for title in title: 
         if titles.text.strip() == '핫딜 채널':
