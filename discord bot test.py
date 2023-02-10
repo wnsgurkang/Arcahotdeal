@@ -1,6 +1,22 @@
 import discord
 import asyncio
 
+token_input = input("Enter your token: ")
+
+print('your token is: ' + token_input)
+print('is this correct? (y/n)')
+
+token_confirm = input()
+
+def token_confirm():
+    if token_confirm == 'y':
+        print('token confirmed')
+    elif token_confirm == 'n':
+        print('input token again')
+        token_input = input("Enter your token: ")
+    else:
+        print('token not confirmed')
+        exit()
 client = discord.Client()
 
 async def embed_task():
@@ -18,4 +34,4 @@ async def main():
 if __name__ == '__main__':
     asyncio.run(main())
 
-client.run('MTA3MDczMTE5MTY3NTc4MTE4MQ.GQTr6Q.mrUEyDmucOny6UJ4Qevifzn-uywdrEumO9WdaU')
+client.run(token_input)
