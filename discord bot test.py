@@ -1,6 +1,22 @@
 import discord
 import asyncio
 
+token_input = input("Enter your token: ")
+
+print('your token is: ' + token_input)
+print('is this correct? (y/n)')
+
+token_confirm = input()
+
+def token_confirm():
+    if token_confirm == 'y':
+        print('token confirmed')
+    elif token_confirm == 'n':
+        print('input token again')
+        token_input = input("Enter your token: ")
+    else:
+        print('token not confirmed')
+        exit()
 client = discord.Client()
 
 #get token by using input
